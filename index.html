@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Cordially Personal Organizer and CRM</title>
+      <style>
+	footer {
+  text-align: center;
+  padding: 3px;
+  background-color: #f2f2f2;
+  color: black;
+	}
+</style>
+      <style>
+         /* Styles for the tabs */
+         .tabs {
+         display: flex;
+         justify-content: space-around;
+         background-color: #333;
+         color: white;
+         padding: 10px 0;
+         }
+         .tab-label {
+         cursor: pointer;
+         }
+         .tab-content {
+         display: none;
+         padding: 20px;
+         border: 1px solid #333;
+         }
+         /* Style for the active tab */
+         .active {
+         display: block;
+         }
+      </style>
+      <style>
+         /* Styles for the buttons */
+         .buttons {
+         display: flex;
+         justify-content: space-around;
+         background-color: #333;
+         color: white;
+         padding: 10px 0;
+         }
+         .button-label {
+         cursor: pointer;
+         }
+         .button-content {
+         display: none;
+         padding: 20px;
+         border: 1px solid #333;
+         }
+         /* Style for the active button */
+         .active {
+         display: block;
+         }
+      </style>
+      <style>
+         /* Styles for the switches */
+         .switches {
+         display: flex;
+         justify-content: space-around;
+         background-color: #333;
+         color: white;
+         padding: 10px 0;
+         }
+         .switch-label {
+         cursor: pointer;
+         }
+         .switch-content {
+         display: none;
+         padding: 20px;
+         border: 1px solid #333;
+         }
+         /* Style for the active switch */
+         .active {
+         display: block;
+         }
+      </style>
+      <style>
+         .login-register-container {
+         display: flex;
+         justify-content: space-around;
+         }
+         .login-form, .register-form {
+         width: 40%;
+         padding: 20px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         .login-form input, .register-form input {
+         width: 100%;
+         padding: 10px;
+         margin-bottom: 10px;
+         box-sizing: border-box;
+         }
+         .login-form button, .register-form button {
+         width: 100%;
+         padding: 10px;
+         background-color: #333;
+         color: #fff;
+         border: none;
+         border-radius: 5px;
+         cursor: pointer;
+         }
+      </style>
+      <style>
+         /* Calendar styles */
+         .calendar {
+         max-width: 600px;
+         margin: 0 auto;
+         font-family: Arial, sans-serif;
+         }
+         .month-year {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 10px;
+         }
+         .month-year-text {
+         font-size: 18px;
+         font-weight: bold;
+         }
+         .weekdays {
+         display: grid;
+         grid-template-columns: repeat(7, 1fr);
+         text-align: center;
+         background-color: #f2f2f2;
+         padding: 5px 0;
+         }
+         .days {
+         display: grid;
+         grid-template-columns: repeat(7, 1fr);
+         gap: 5px;
+         }
+         .day {
+         background-color: #fff;
+         padding: 5px;
+         text-align: right;
+         font-size: 14px;
+         position: relative;
+         }
+         .day.current {
+         background-color: #007bff;
+         color: #fff;
+         }
+         .day.event {
+         background-color: #ffc107;
+         color: #000;
+         }
+      </style>
+      <style>
+         /* Add this CSS code to your index.html file (inside the 
+      <style> tags) */
+         .modal {
+         display: none;
+         position: fixed;
+         z-index: 1;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         background-color: rgba(0, 0, 0, 0.4);
+         }
+         .modal-content {
+         background-color: #fefefe;
+         margin: 15% auto;
+         padding: 20px;
+         border: 1px solid #888;
+         width: 30%;
+         }
+         .close {
+         color: #aaa;
+         float: right;
+         font-size: 28px;
+         font-weight: bold;
+         }
+         .close:hover,
+         .close:focus {
+         color: black;
+         text-decoration: none;
+         cursor: pointer;
+         }
+      </style>
+      <style>
+         /* Task styles */
+         .task-list {
+         max-width: 400px;
+         margin: 0 auto;
+         }
+         .task-form {
+         display: flex;
+         margin-bottom: 10px;
+         }
+         .task-input {
+         flex: 1;
+         padding: 5px;
+         font-size: 16px;
+         }
+         .add-task {
+         padding: 5px 10px;
+         font-size: 16px;
+         }
+         .tasks {
+         list-style-type: none;
+         padding: 0;
+         }
+         .task {
+         display: flex;
+         align-items: center;
+         padding: 10px;
+         background-color: #f2f2f2;
+         margin-bottom: 5px;
+         }
+         .task input[type="checkbox"] {
+         margin-right: 10px;
+         }
+         .task.completed {
+         text-decoration: line-through;
+         color: #888;
+         }
+      </style>
+      <style>
+         /* Contact styles */
+         .contact-list {
+         max-width: 400px;
+         margin: 0 auto;
+         }
+         .contact-form {
+         display: flex;
+         flex-wrap: wrap;
+         margin-bottom: 10px;
+         }
+         .contact-form input {
+         flex: 1;
+         padding: 5px;
+         font-size: 16px;
+         margin-right: 5px;
+         margin-bottom: 5px;
+         }
+         .add-contact {
+         padding: 5px 10px;
+         font-size: 16px;
+         }
+         .contacts {
+         list-style-type: none;
+         padding: 0;
+         }
+         .contact {
+         display: flex;
+         align-items: center;
+         padding: 10px;
+         background-color: #f2f2f2;
+         margin-bottom: 5px;
+         }
+         .contact-info {
+         flex: 1;
+         }
+      </style>
+      <style>
+         /* Note styles */
+         .note-list {
+         max-width: 600px;
+         margin: 0 auto;
+         }
+         .note-form {
+         display: flex;
+         flex-direction: column;
+         margin-bottom: 10px;
+         }
+         .note-input {
+         padding: 5px;
+         font-size: 16px;
+         margin-bottom: 5px;
+         resize: vertical;
+         min-height: 100px;
+         }
+         .add-note {
+         padding: 5px 10px;
+         font-size: 16px;
+         align-self: flex-end;
+         }
+         .notes {
+         list-style-type: none;
+         padding: 0;
+         }
+         .note {
+         padding: 10px;
+         background-color: #f2f2f2;
+         margin-bottom: 5px;
+         }
+      </style>
+      <style>
+         /* Document styles */
+         .document-list {
+         max-width: 600px;
+         margin: 0 auto;
+         }
+         .document-form {
+         display: flex;
+         align-items: center;
+         margin-bottom: 10px;
+         }
+         .document-input {
+         margin-right: 5px;
+         }
+         .add-document {
+         padding: 5px 10px;
+         font-size: 16px;
+         }
+         .documents {
+         list-style-type: none;
+         padding: 0;
+         }
+         .document {
+         display: flex;
+         align-items: center;
+         padding: 10px;
+         background-color: #f2f2f2;
+         margin-bottom: 5px;
+         }
+         .document-info {
+         flex: 1;
+         }
+      </style>
+      <style>
+         /* Journal styles */
+         .journal-list {
+         max-width: 600px;
+         margin: 0 auto;
+         }
+         .journal-form {
+         display: flex;
+         flex-direction: column;
+         margin-bottom: 10px;
+         }
+         .journal-input {
+         .journal-input {
+         padding: 5px;
+         font-size: 16px;
+         margin-bottom: 5px;
+         resize: vertical;
+         min-height: 100px;
+         }
+         .add-journal-entry {
+         padding: 5px 10px;
+         font-size: 16px;
+         align-self: flex-end;
+         }
+         .journal-entries {
+         list-style-type: none;
+         padding: 0;
+         }
+         .journal-entry {
+         padding: 10px;
+         background-color: #f2f2f2;
+         margin-bottom: 5px;
+         }
+         .journal-entry-date {
+         font-weight: bold;
+         margin-bottom: 5px;
+         }
+      </style>
+      <style>
+         /* Milestone styles */
+         .milestone-list {
+         max-width: 600px;
+         margin: 0 auto;
+         }
+         .milestone-form {
+         display: flex;
+         align-items: center;
+         margin-bottom: 10px;
+         }
+         .milestone-input,
+         .milestone-date {
+         margin-right: 5px;
+         padding: 5px;
+         font-size: 16px;
+         }
+         .add-milestone {
+         padding: 5px 10px;
+         font-size: 16px;
+         }
+         .milestones {
+         list-style-type: none;
+         padding: 0;
+         }
+         .milestone {
+         display: flex;
+         align-items: center;
+         padding: 10px;
+         background-color: #f2f2f2;
+         margin-bottom: 5px;
+         }
+         .milestone-info {
+         flex: 1;
+         }
+      </style>
+   </head>
+   <body>
+      <h1>Cordially</h1>
+      <h4>Personal Organizer and CRM</h4>
+      <div class="tabs">
+         <div class="tab-label" onclick="showTab('Features')">Features</div>
+         <div class="tab-label" onclick="showTab('LoginRegister')">Login/Register</div>
+         <div class="tab-label" onclick="showTab('Calendar')">Calendar</div>
+         <div class="tab-label" onclick="showTab('Tasks')">Tasks</div>
+         <div class="tab-label" onclick="showTab('Contacts')">Contacts</div>
+         <div class="tab-label" onclick="showTab('Notes')">Notes</div>
+         <div class="tab-label" onclick="showTab('Documents')">Documents</div>
+         <div class="tab-label" onclick="showTab('Journal')">Journal</div>
+         <div class="tab-label" onclick="showTab('Milestones')">Milestones</div>
+         <div class="tab-label" onclick="showTab('CRM')">CRM</div>
+         <div class="tab-label" onclick="showTab('Donate')">Donate</div>
+      </div>
+      <div class="tab" id="Features">
+         <h2>Features</h2>
+         <p>Personal Organizer and CRM</p>
+         <p>Home Screen:</p>
+         <ul>
+            <li>Dashboard with calendar, task list, and quick links to key features</li>
+         </ul>
+         <p>Calendar:</p>
+         <ul>
+            <li>Schedule work shifts, appointments, family/social events
+            <li>Integrate with team/group calendars
+            <li>Set reminders and notifications
+         </ul>
+         <p>Tasks:</p>
+         <ul>
+            <li>Create tasks with details, priority, deadline, assignee
+            <li>View tasks by status (planned, in progress, completed)  
+            <li>Recurring/repeating tasks
+            <li>Reminders for upcoming/overdue tasks
+         </ul>
+         <p>Contacts:</p>
+         <ul>
+            <li>Store contact details of other civilians, mentors, team members
+            <li>Groups for family, teams, projects
+            <li>Search and filter contacts
+            <li>Quick call/message integration
+         </ul>
+         <p>Notes:</p>
+         <ul>
+            <li>Take notes during meetings, classes, counseling sessions
+            <li>Add attachments like documents, photos
+            <li>Categorize notes by topic, project etc.  
+         </ul>
+         <p>Documents:</p>
+         <ul>
+            <li>Store certificates, transcripts, ID docs, health records etc.
+            <li>Add file annotations
+            <li>Facilitate document sharing
+         </ul>
+         <p>Journal:</p>
+         <ul>
+            <li>Record daily experiences, learnings, thoughts, prayers
+            <li>Private or shared journal entries
+            <li>Journal prompts to track progress over time
+         </ul>
+         <p>Milestones:</p>
+         <ul>
+            <li>Track certification progress, career goals, family goals
+            <li>Add target dates and notes
+            <li>Milestone reminders and notifications
+         </ul>
+         <p>CRM</p>
+         <ul>
+            <li>Custom message templates</li>
+            <li>Integrations for calls, sms, WhatsApp and Video calls</li>
+         </ul>
+         <p>Additional features:</p>
+         <ul>
+            <li>Built-in messaging/chat for communication
+            <li>Maps integration for locations 
+            <li>Customizable home screen widgets
+            <li>Backup and restore functionality
+            <li>Private mode for sensitive information
+         </ul>
+         <br>
+         <br>
+         <table>
+            <tr>
+               <th>Component</th>
+               <th>Feature list</th>
+               <th>Status</th>
+            </tr>
+            <tr>
+               <td>Home Screen</td>
+               <td>Dashboard with calendar, task list, and quick links to key features</td>
+               <td>In progress</td>
+            </tr>
+            <tr>
+               <td>Calendar</td>
+               <td>Schedule work shifts, appointments, family/social events</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Integrate with team/group calendars</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Set reminders and notifications</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Tasks</td>
+               <td>Create tasks with details, priority, deadline, assignee</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>View tasks by status (planned, in progress, completed)</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Recurring/repeating tasks</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Reminders for upcoming/overdue tasks</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Contacts</td>
+               <td>Store contact details of other civilians, mentors, team members</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Groups for family, teams, projects</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Search and filter contacts</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Quick call/message integration</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Notes</td>
+               <td>Take notes during meetings, classes, counseling sessions</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Add attachments like documents, photos</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Categorize notes by topic, project etc.</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Documents</td>
+               <td>Store certificates, transcripts, ID docs, health records etc.</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Add file annotations</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Facilitate document sharing</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Journal</td>
+               <td>Record daily experiences, learnings, thoughts, prayers</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Private or shared journal entries</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Journal prompts to track progress over time</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Milestones</td>
+               <td>Track certification progress, career goals, family goals</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Add target dates and notes</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Milestone reminders and notifications</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>CRM</td>
+               <td>Custom message templates</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Integrations for calls, sms, WhatsApp and Video calls</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td>Additional features</td>
+               <td>Built-in messaging/chat for communication</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Maps integration for locations</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Customizable home screen widgets</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>Backup and restore functionality</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+            <tr>
+               <td></td>
+               <td>Private mode for sensitive information</td>
+               <td>Pending</td>
+            </tr>
+            <tr>
+         </table>
+      </div>
+      <div class="tab" id="LoginRegister">
+         <h2>Login/Register</h2>
+         <div class="login-register-container">
+            <div class="login-form">
+               <h3>Login</h3>
+               <form>
+                  <input type="text" placeholder="Username" id="login-username">
+                  <input type="password" placeholder="Password" id="login-password">
+                  <button type="submit" id="login-btn">Login</button>
+               </form>
+            </div>
+            <div class="register-form">
+               <h3>Register</h3>
+               <form>
+                  <input type="text" placeholder="Username" id="register-username">
+                  <input type="password" placeholder="Password" id="register-password">
+                  <input type="password" placeholder="Confirm Password" id="register-confirm-password">
+                  <button type="submit" id="register-btn">Register</button>
+               </form>
+            </div>
+         </div>
+      </div>
+      <div class="tab" id="Calendar">
+         <h2>Calendar</h2>
+         <div class="calendar">
+            <div class="month-year">
+               <button class="prev">&laquo;</button>
+               <div class="month-year-text"></div>
+               <button class="next">&raquo;</button>
+            </div>
+            <div class="weekdays">
+               <div>Sun</div>
+               <div>Mon</div>
+               <div>Tue</div>
+               <div>Wed</div>
+               <div>Thu</div>
+               <div>Fri</div>
+               <div>Sat</div>
+            </div>
+            <div class="days"></div>
+         </div>
+      </div>
+      <div id="event-modal" class="modal">
+         <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Event</h2>
+            <form id="event-form">
+               <label for="event-date">Date:</label>
+               <input type="date" id="event-date" required>
+               <label for="event-description">Description:</label>
+               <textarea id="event-description" required></textarea>
+               <button type="submit">Add Event</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="Tasks">
+         <h2>Tasks</h2>
+         <div class="task-list">
+            <h3>Task List</h3>
+            <ul class="tasks"></ul>
+            <form class="task-form">
+               <input type="text" placeholder="New task" class="task-input">
+               <button type="submit" class="add-task">Add</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="Contacts">
+         <h2>Contacts</h2>
+         <div class="contact-list">
+            <h3>Contacts</h3>
+            <ul class="contacts"></ul>
+            <form class="contact-form">
+               <input type="text" placeholder="Name" class="name-input">
+               <input type="text" placeholder="Phone" class="phone-input">
+               <button type="submit"
+               <button type="submit" class="add-contact">Add Contact</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="Notes">
+         <h2>Notes</h2>
+         <div class="note-list">
+            <h3>Notes</h3>
+            <ul class="notes"></ul>
+            <form class="note-form">
+               <textarea placeholder="New note" class="note-input"></textarea>
+               <button type="submit" class="add-note">Add Note</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="CRM">
+         <h2>CRM</h2>
+         <div class="buttons">
+            <div class="button-label" onclick="showButton('Leads')">Leads</div>
+            <div class="button-label" onclick="showButton('Messages')">Messages</div>
+            <div class="button-label" onclick="showButton('Interaction')">Interaction</div>
+         </div>
+         <div class="button" id="Leads">
+            <h2>Leads</h2>
+         </div>
+         <div class="button" id="Messages">
+            <h2>Messages</h2>
+         </div>
+         <div class="button" id="Interaction">
+            <h2>Interaction</h2>
+         </div>
+      </div>
+      </div>
+      <div class="tab" id="Documents">
+         <h2>Documents</h2>
+         <div class="document-list">
+            <h3>Documents</h3>
+            <ul class="documents"></ul>
+            <form class="document-form">
+               <input type="file" class="document-input">
+               <button type="submit" class="add-document">Add Document</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="Journal">
+         <h2>Journal</h2>
+         <div class="journal-list">
+            <h3>Journal</h3>
+            <ul class="journal-entries"></ul>
+            <form class="journal-form">
+               <textarea placeholder="New journal entry" class="journal-input"></textarea>
+               <button type="submit" class="add-journal-entry">Add Entry</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="Milestones">
+         <h2>Milestones</h2>
+         <div class="milestone-list">
+            <h3>Milestones</h3>
+            <ul class="milestones"></ul>
+            <form class="milestone-form">
+               <input type="text" placeholder="New milestone" class="milestone-input">
+               <input type="date" class="milestone-date">
+               <button type="submit" class="add-milestone">Add Milestone</button>
+            </form>
+         </div>
+      </div>
+      <div class="tab" id="Donate">
+         <h2>Make a donation</h2>
+         <p>We are constantly working on improving and maintaining the back-end of this system. We need your ongoing support to keep this project alive.<br>
+            Do make a big or small donation to us as a way to show us your appreciation for this platform. We are always delighted to get your backing on this.<br>
+            Thank you for choosing us. You can make a donation by clicking the following button:
+      </div>
+
+<footer>
+  <p>A product of <a href="https://benevolentfamily.tiiny.site"> Benevolent Family Ministry</a></p>
+</footer>
+
+      <script>
+         function showTab(tabName) {
+             // Hide all tabs and labels
+             let tabs = document.querySelectorAll('.tab');
+             let labels = document.querySelectorAll('.tab-label');
+             for (let i = 0; i < tabs.length; i++) {
+                 tabs[i].style.display = 'none';
+                 labels[i].classList.remove('active');
+             }
+         
+             // Show the selected tab and mark its label as active
+             document.getElementById(tabName).style.display = 'block';
+             document.querySelector(`[onclick*="${tabName}"]`).classList.add('active');
+         }
+         
+         // Show the initial tab
+         showTab('Features');
+      </script>
+      <script>
+         function showButton(buttonName) {
+             // Hide all buttons and labels
+             let buttons = document.querySelectorAll('.button');
+             let labels = document.querySelectorAll('.button-label');
+             for (let i = 0; i < buttons.length; i++) {
+                 buttons[i].style.display = 'none';
+                 labels[i].classList.remove('active');
+             }
+         
+             // Show the selected button and mark its label as active
+             document.getElementById(buttonName).style.display = 'block';
+             document.querySelector(`[onclick*="${buttonName}"]`).classList.add('active');
+         }
+         // Show the initial button
+         showButton('Leads');
+      </script>
+      <script>
+         // User registration
+         const registerBtn = document.getElementById('register-btn');
+         const registerUsername = document.getElementById('register-username');
+         const registerPassword = document.getElementById('register-password');
+         const registerConfirmPassword = document.getElementById('register-confirm-password');
+         
+         registerBtn.addEventListener('click', (e) => {
+             e.preventDefault();
+             const username = registerUsername.value.trim();
+             const password = registerPassword.value.trim();
+             const confirmPassword = registerConfirmPassword.value.trim();
+         
+             // Perform client-side validation
+             if (username === '' || password === '' || confirmPassword === '') {
+                 alert('Please fill in all fields.');
+                 return;
+             }
+         
+             if (password !== confirmPassword) {
+                 alert('Passwords do not match.');
+                 return;
+             }
+         
+             // Send registration data to the server
+             // Replace this with your server-side code to handle user registration
+             console.log('Registration Data:', { username, password });
+             // Clear the form fields
+             registerUsername.value = '';
+             registerPassword.value = '';
+             registerConfirmPassword.value = '';
+         });
+         
+         // User login
+         const loginBtn = document.getElementById('login-btn');
+         const loginUsername = document.getElementById('login-username');
+         const loginPassword = document.getElementById('login-password');
+         
+         loginBtn.addEventListener('click', (e) => {
+             e.preventDefault();
+             const username = loginUsername.value.trim();
+             const password = loginPassword.value.trim();
+         
+             // Perform client-side validation
+             if (username === '' || password === '') {
+                 alert('Please fill in both fields.');
+                 return;
+             }
+         
+             // Send login data to the server
+             // Replace this with your server-side code to handle user authentication
+             console.log('Login Data:', { username, password });
+             // Clear the form fields
+             loginUsername.value = '';
+             loginPassword.value = '';
+         });
+      </script>
+      <script>
+         // Calendar functionality
+         const monthYearText = document.querySelector('.month-year-text');
+         const prevButton = document.querySelector('.prev');
+         const nextButton = document.querySelector('.next');
+         const daysContainer = document.querySelector('.days');
+         
+         let currentDate = new Date();
+         let selectedDate = currentDate;
+         
+         function renderCalendar() {
+             const year = currentDate.getFullYear();
+             const month = currentDate.getMonth();
+             const firstDayOfMonth = new Date(year, month, 1);
+             const daysInMonth = new Date(year, month + 1, 0).getDate();
+             const dateString = firstDayOfMonth.toLocaleDateString('default', {
+                 month: 'long',
+                 year: 'numeric',
+             });
+         
+             monthYearText.textContent = dateString;
+             daysContainer.innerHTML = '';
+         
+             const startingDay = firstDayOfMonth.getDay();
+             let dayCount = 1;
+         
+             for (let i = 0; i < 6; i++) {
+                 const week = document.createElement('div');
+                 week.classList.add('week');
+         
+                 for (let j = 0; j < 7; j++) {
+                     const day = document.createElement('div');
+                     day.classList.add('day');
+         
+                     if (i === 0 && j < startingDay) {
+                         // Add empty cells before the first day
+                         day.textContent = '';
+                     } else if (dayCount > daysInMonth) {
+                         // No more days to render
+                         day.textContent = '';
+                     } else {
+                         const dayDate = new Date(year, month, dayCount);
+                         day.textContent = dayCount;
+         
+                         // Add event markers or other functionality here
+                         if (dayDate.toDateString() === selectedDate.toDateString()) {
+                             day.classList.add('current');
+                         }
+         
+                         // Add event handling for day click
+                         day.addEventListener('click', () => {
+                             selectedDate = dayDate;
+                             renderCalendar();
+                         });
+         
+                         dayCount++;
+                     }
+         
+                     week.appendChild(day);
+                 }
+         
+                 daysContainer.appendChild(week);
+             }
+         }
+         
+         prevButton.addEventListener('click', () => {
+             currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1);
+             renderCalendar();
+         });
+         
+         nextButton.addEventListener('click', () => {
+             currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
+             renderCalendar();
+         });
+         
+         renderCalendar();
+      </script>
+      <script>
+         function addEvent(eventDate, eventDescription) {
+             const event = {
+                 date: eventDate,
+                 description: eventDescription
+             };
+         
+             // Add the event to the events array (create it if it doesn't exist)
+             if (!window.events) {
+                 window.events = [];
+             }
+             window.events.push(event);
+         
+             // Re-render the calendar with the new events
+             renderCalendar();
+         }
+      </script>
+      <script>
+         function renderCalendar() {
+             // ... (existing code)
+         
+             for (let i = 0; i < 6; i++) {
+                 const week = document.createElement('div');
+                 week.classList.add('week');
+         
+                 for (let j = 0; j < 7; j++) {
+                     const day = document.createElement('div');
+                     day.classList.add('day');
+         
+                     // ... (existing code)
+         
+                     if (dayCount > daysInMonth) {
+                         // No more days to render
+                         day.textContent = '';
+                     } else {
+                         const dayDate = new Date(year, month, dayCount);
+                         day.textContent = dayCount;
+         
+                         // Check if there are any events on this day
+                         const eventsOnThisDay = window.events ? window.events.filter(event => event.date.toDateString() === dayDate.toDateString()) : [];
+         
+                         if (eventsOnThisDay.length > 0) {
+                             day.classList.add('event');
+         
+                             // Add event markers or tooltips here
+                             const eventMarker = document.createElement('div');
+                             eventMarker.classList.add('event-marker');
+                             eventMarker.textContent = eventsOnThisDay.length + ' event(s)';
+                             day.appendChild(eventMarker);
+                         }
+         
+                         // ... (existing code)
+                     }
+         
+                     week.appendChild(day);
+                 }
+         
+                 daysContainer.appendChild(week);
+             }
+         }
+      </script>
+      <script>
+         // Add this JavaScript code to your index.html file (inside the <script> tags)
+         const modal = document.getElementById('event-modal');
+         const eventForm = document.getElementById('event-form');
+         const closeModal = document.querySelector('.close');
+         
+         // Open the modal when a day is clicked
+         const days = document.querySelectorAll('.day');
+         days.forEach(day => {
+             day.addEventListener('click', () => {
+                 modal.style.display = 'block';
+                 const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), parseInt(day.textContent));
+                 const eventDateInput = document.getElementById('event-date');
+                 eventDateInput.value = selectedDate.toISOString().split('T')[0];
+             });
+         });
+         
+         // Close the modal when the close button or outside the modal is clicked
+         closeModal.addEventListener('click', () => {
+             modal.style.display = 'none';
+         });
+         
+         window.addEventListener('click', (event) => {
+             if (event.target === modal) {
+                 modal.style.display = 'none';
+             }
+         });
+         
+         // Handle the form submission
+         eventForm.addEventListener('submit', (event) => {
+             event.preventDefault();
+             const eventDate = new Date(document.getElementById('event-date').value);
+             const eventDescription = document.getElementById('event-description').value;
+             addEvent(eventDate, eventDescription);
+             modal.style.display = 'none';
+             eventForm.reset();
+         });
+      </script>
+      <script>
+         // Task functionality
+         const taskInput = document.querySelector('.task-input');
+         const addTaskButton = document.querySelector('.add-task');
+         const taskList = document.querySelector('.tasks');
+         
+         let tasks = [];
+         
+         function renderTasks() {
+             taskList.innerHTML = '';
+         
+             tasks.forEach((task, index) => {
+                 const taskElement = document.createElement('li');
+                 taskElement.classList.add('task');
+         
+                 const checkbox = document.createElement('input');
+                 checkbox.type = 'checkbox';
+                 checkbox.checked = task.completed;
+                 checkbox.addEventListener('change', () => {
+                     tasks[index].completed = checkbox.checked;
+                     renderTasks();
+                 });
+         
+                 const taskText = document.createElement('span');
+                 taskText.textContent = task.text;
+         
+                 if (task.completed) {
+                     taskElement.classList.add('completed');
+                 }
+         
+                 taskElement.appendChild(checkbox);
+                 taskElement.appendChild(taskText);
+                 taskList.appendChild(taskElement);
+             });
+         }
+         
+         addTaskButton.addEventListener('click', (e) => {
+             e.preventDefault();
+             const taskText = taskInput.value.trim();
+         
+             if (taskText !== '') {
+                 tasks.push({ text: taskText, completed: false });
+                 taskInput.value = '';
+                 renderTasks();
+             }
+         });
+         
+         renderTasks();
+      </script>
+      <script>
+         // Contact functionality
+         const nameInput = document.querySelector('.name-input');
+         const phoneInput = document.querySelector('.phone-input');
+         const addContactButton = document.querySelector('.add-contact');
+         const contactList = document.querySelector('.contacts');
+         
+         let contacts = [];
+         
+         function renderContacts() {
+             contactList.innerHTML = '';
+         
+             contacts.forEach((contact) => {
+                 const contactElement = document.createElement('li');
+                 contactElement.classList.add('contact');
+         
+                 const contactInfo = document.createElement('div');
+                 contactInfo.classList.add('contact-info');
+         
+                 const nameElement = document.createElement('span');
+                 nameElement.textContent = contact.name;
+         
+                 const phoneElement = document.createElement('span');
+                 phoneElement.textContent = contact.phone;
+         
+                 contactInfo.appendChild(nameElement);
+                 contactInfo.appendChild(phoneElement);
+         
+                 contactElement.appendChild(contactInfo);
+                 contactList.appendChild(contactElement);
+             });
+         }
+         
+         addContactButton.addEventListener('click', (e) => {
+             e.preventDefault();
+             const name = nameInput.value.trim();
+             const phone = phoneInput.value.trim();
+         
+             if (name !== '' && phone !== '') {
+                 contacts.push({ name, phone });
+                 nameInput.value = '';
+                 phoneInput.value = '';
+                 renderContacts();
+             }
+         });
+         
+         renderContacts();
+      </script>
+      <script>
+         // Note functionality
+         const noteInput = document.querySelector('.note-input');
+         const addNoteButton = document.querySelector('.add-note');
+         const noteList = document.querySelector('.notes');
+         
+         let notes = [];
+         
+         function renderNotes() {
+             noteList.innerHTML = '';
+         
+             notes.forEach((note) => {
+                 const noteElement = document.createElement('li');
+                 noteElement.classList.add('note');
+                 noteElement.textContent = note;
+         
+                 noteList.appendChild(noteElement);
+             });
+         }
+         
+         addNoteButton.addEventListener('click', (e) => {
+             e.preventDefault();
+             const noteText = noteInput.value.trim();
+         
+             if (noteText !== '') {
+                 notes.push(noteText);
+                 noteInput.value = '';
+                 renderNotes();
+             }
+         });
+         
+         renderNotes();
+      </script>
+      <script>
+         // Document functionality
+         const documentInput = document.querySelector('.document-input');
+         const addDocumentButton = document.querySelector('.add-document');
+         const documentList = document.querySelector('.documents');
+         
+         let documents = [];
+         
+         function renderDocuments() {
+             documentList.innerHTML = '';
+         
+             documents.forEach((document) => {
+                 const documentElement = document.createElement('li');
+                 documentElement.classList.add('document');
+         
+                 const documentInfo = document.createElement('div');
+                 documentInfo.classList.add('document-info');
+         
+                 const documentName = document.createElement('span');
+                 documentName.textContent = document.name;
+         
+                 documentInfo.appendChild(documentName);
+                 documentElement.appendChild(documentInfo);
+                 documentList.appendChild(documentElement);
+             });
+         }
+         
+         addDocumentButton.addEventListener('click', (e) => {
+             e.preventDefault();
+             const file = documentInput.files[0];
+         
+             if (file) {
+                 documents.push(file);
+                 documentInput.value = '';
+                 renderDocuments();
+             }
+         });
+         
+         renderDocuments();
+      </script>
+      <script>
+         // Journal functionality
+         const journalInput = document.querySelector('.journal-input');
+         const addJournalEntryButton = document.querySelector('.add-journal-entry');
+         const journalEntriesList = document.querySelector('.journal-entries');
+         
+         let journalEntries = [];
+         
+         function renderJournalEntries() {
+             journalEntriesList.innerHTML = '';
+         
+             journalEntries.forEach((entry) => {
+                 const entryElement = document.createElement('li');
+                 entryElement.classList.add('journal-entry');
+         
+                 const entryDate = document.createElement('div');
+                 entryDate.classList.add('journal-entry-date');
+                 entryDate.textContent = entry.date.toLocaleDateString();
+         
+                 const entryText = document.createElement('div');
+                 entryText.textContent = entry.text;
+         
+                 entryElement.appendChild(entryDate);
+                 entryElement.appendChild(entryText);
+         
+                 journalEntriesList.appendChild(entryElement);
+             });
+         }
+         
+         addJournalEntryButton.addEventListener('click', (e) => {
+             e.preventDefault();
+             const entryText = journalInput.value.trim();
+         
+             if (entryText !== '') {
+                 journalEntries.push({ text: entryText, date: new Date() });
+                 journalInput.value = '';
+                 renderJournalEntries();
+             }
+         });
+         
+         renderJournalEntries();
+      </script>
+      <script>
+         // Milestone functionality
+         const milestoneInput = document.querySelector('.milestone-input');
+         const milestoneDate = document.querySelector('.milestone-date');
+         const addMilestoneButton = document.querySelector('.add-milestone');
+         const milestoneList = document.querySelector('.milestones');
+         
+         let milestones = [];
+         
+         function renderMilestones() {
+             milestoneList.innerHTML = '';
+         
+             milestones.forEach((milestone) => {
+                 const milestoneElement = document.createElement('li');
+                 milestoneElement.classList.add('milestone');
+         
+                 const milestoneInfo = document.createElement('div');
+                 milestoneInfo.classList.add('milestone-info');
+         
+                 const milestoneName = document.createElement('span');
+                 milestoneName.textContent = milestone.name;
+         
+                 const milestoneTargetDate = document.createElement('span');
+                 milestoneTargetDate.textContent = milestone.targetDate.toLocaleDateString();
+         
+                 milestoneInfo.appendChild(milestoneName);
+                 milestoneInfo.appendChild(milestoneTargetDate);
+         
+                 milestoneElement.appendChild(milestoneInfo);
+                 milestoneList.appendChild(milestoneElement);
+             });
+         }
+         
+         addMilestoneButton.addEventListener('click', (e) => {
+             e.preventDefault();
+             const name = milestoneInput.value.trim();
+             const targetDate = new Date(milestoneDate.value);
+         
+             if (name !== '' && !isNaN(targetDate.getTime())) {
+                 milestones.push({ name, targetDate });
+                 milestoneInput.value = '';
+                 milestoneDate.value = '';
+                 renderMilestones();
+             }
+         });
+         
+         renderMilestones();
+      </script>
+   </body>
+</html>
